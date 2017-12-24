@@ -23,6 +23,8 @@ public class CarGame extends JFrame implements Runnable {
     Image image;
     Graphics2D g;
 
+    GameState gameState = GameState.Menu;
+    Image menuImage;
 
     
     public static void main(String[] args) {
@@ -32,6 +34,7 @@ public class CarGame extends JFrame implements Runnable {
         frame.setVisible(true);
         frame.setTitle("Car Game");
         frame.setLocationRelativeTo(null);
+        frame.setExtendedState(MAXIMIZED_BOTH);
         frame.setResizable(false);
     }
 
@@ -45,7 +48,16 @@ public class CarGame extends JFrame implements Runnable {
 
                
                 if (e.BUTTON1 == e.getButton()) {
-                    reset();
+                    if(gameState == GameState.Menu){
+                        gameState = GameState.CarSelect;
+                    }
+                    else if(gameState == GameState.CarSelect){
+                        
+                    }
+                    else if(gameState == GameState.Ingame){
+
+                    }
+                 
                 }
 
                 if (e.BUTTON3 == e.getButton()) {
@@ -122,19 +134,25 @@ public class CarGame extends JFrame implements Runnable {
 //fill border
             g.setColor(Color.white);
             g.fillPolygon(x, y, 4);
-// draw border
-            g.setColor(Color.black);
-            g.drawPolyline(x, y, 5);
-//Color Player's Side when it's their turn
+
 
 
         if (animateFirstTime) {
             gOld.drawImage(image, 0, 0, null);
             return;
         }
-
-       
-
+         
+        
+        if(gameState == GameState.Menu){
+           g.drawImage(menuImage,Window.getX(0),Window.getY(0),Window.getWidth2(),Window.getHeight2(),this);
+        }
+        else if(gameState == GameState.CarSelect){
+            
+        }
+        else if(gameState == GameState.Ingame){
+            
+        }
+        
         gOld.drawImage(image, 0, 0, null);
     }
 
@@ -167,10 +185,20 @@ public class CarGame extends JFrame implements Runnable {
                 Window.xsize = getSize().width;
                 Window.ysize = getSize().height;
             }
-//           menu1 = Toolkit.getDefaultToolkit().getImage("assets/images/menu1.jpg");
+            menuImage = Toolkit.getDefaultToolkit().getImage("assets/menuImage.png");
 
             reset();
 
+        }
+        
+        if(gameState == GameState.Menu){
+            
+        }
+        else if(gameState == GameState.CarSelect){
+            
+        }
+        else if(gameState == GameState.Ingame){
+            
         }
 
 

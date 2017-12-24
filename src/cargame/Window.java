@@ -1,17 +1,15 @@
 package cargame;
 
 
-import java.awt.Graphics2D;
-import java.awt.Image;
 
 class Window {
-    static final int XBORDER = 180; //30 + 150
-    static final int YBORDER = 180; //30 + 150
+    static final int XBORDER = 0; 
+    static final int YBORDER = 0; 
     
     static final int YTITLE = 30; //30
     static final int WINDOW_BORDER = 8; //8
-    static final int WINDOW_WIDTH = 2*(WINDOW_BORDER + XBORDER) + 500;
-    static final int WINDOW_HEIGHT = YTITLE + WINDOW_BORDER + 2 * YBORDER + 500;
+    static final int WINDOW_WIDTH = 1920;
+    static final int WINDOW_HEIGHT = 1080;
     
         
     static int xsize = -1;
