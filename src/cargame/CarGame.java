@@ -47,6 +47,8 @@ public class CarGame extends JFrame implements Runnable {
     int mouseY;
     
     double framerate = 60.0;
+    int timeCount;
+    boolean gameOver;
 
     
     public static void main(String[] args) {
@@ -217,6 +219,7 @@ public class CarGame extends JFrame implements Runnable {
             g.drawImage(road,Window.getX(road2x),Window.getY(road2y+25),Window.getWidth2(),Window.getHeight2()+5,this);
              
            car.draw(g, this);
+           Obstacles.Draw(g, this);
         }
         
         gOld.drawImage(image, 0, 0, null);
@@ -239,12 +242,13 @@ public class CarGame extends JFrame implements Runnable {
 
 /////////////////////////////////////////////////////////////////////////
     public void reset() {
-     road1x = 0;
-     road1y = 0;
-     road2x = 0;
-     road2y = - Window.getHeight2();
-     
-     car = new Car(1);
+        timeCount = 0;
+        road1x = 0;
+        road1y = 0;
+        road2x = 0;
+        road2y = - Window.getHeight2();
+
+        car = new Car(1);
     }
 /////////////////////////////////////////////////////////////////////////
 
@@ -261,9 +265,18 @@ public class CarGame extends JFrame implements Runnable {
             quit = Toolkit.getDefaultToolkit().getImage("assets/Quit.png");
             title = Toolkit.getDefaultToolkit().getImage("assets/title.png");
             road = Toolkit.getDefaultToolkit().getImage("assets/road.png");
+            Obstacles.initSprites();
+            Obstacles.Create(1, Obstacles.Type.Car);
             reset();
 
         }
+        gameOver = Obstacles.HitBox(car.getX(), car.getY());
+        if(gameOver){
+            //gameState = GameState.Over;
+            return;
+        }
+       
+        
        
         if(gameState == GameState.Menu){
             
@@ -275,13 +288,22 @@ public class CarGame extends JFrame implements Runnable {
             
             road1y += 10;
             if(road1y >= Window.getHeight2())
-            road1y = -Window.getHeight2()+25;
+                road1y = -Window.getHeight2()+25;
+            
             road2y += 10;
             if(road2y >= Window.getHeight2())
-            road2y = -Window.getHeight2() +25 ;
+                road2y = -Window.getHeight2() +25 ;
             
             
             car.tick(mouseX,mouseY);
+            
+            Obstacles.Tick();
+            
+            if(timeCount % 150 == 1)
+               // Obstacles.Create(0, Obstacles.Type.TrashCan);
+            if(timeCount % 100 == 1)
+                
+            timeCount++;
         }
 
 

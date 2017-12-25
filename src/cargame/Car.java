@@ -34,7 +34,7 @@ public class Car {
     public void tick(int mouseX,int mouseY){
         calcAngle(mouseX, mouseY);
         
-        if(fireValid(carX,carY,mouseX,mouseY,30)){
+        if(moveValid(carX,carY,mouseX,mouseY,30)){
             carX += xMov;       
             carY += yMov;
         }
@@ -59,7 +59,7 @@ public class Car {
         g.translate(-xpos,-ypos);
     }
     public void calcAngle(double mouseX, double mouseY){
-        if(fireValid(carX,carY,mouseX,mouseY,30)){
+        if(moveValid(carX,carY,mouseX,mouseY,30)){
             double centerX = carX;
             double centerY = carY;
 
@@ -82,11 +82,18 @@ public class Car {
         yMov = (mouseY-carY)/dist;
     }
     
-    public boolean fireValid(double pX,double pY,double mX, double mY,double pSize){
+    public boolean moveValid(double pX,double pY,double mX, double mY,double pSize){
         if(pX+pSize > mX && pX-pSize < mX && pY+pSize > mY && pY-pSize < mY)
             return false;
         else
             return true;
+    }
+    
+    public int getX(){
+        return carX;
+    }
+    public int getY(){
+        return carY;
     }
 
 
