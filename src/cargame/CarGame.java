@@ -280,8 +280,8 @@ public class CarGame extends JFrame implements Runnable {
             if(road2y >= Window.getHeight2())
             road2y = -Window.getHeight2() +25 ;
             
-            car.setCarLocation(mouseX,mouseY);
-            car.calcAngle(mouseX,mouseY);
+            
+            car.tick(mouseX,mouseY);
         }
 
 
