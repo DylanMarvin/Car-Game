@@ -29,6 +29,8 @@ public class CarGame extends JFrame implements Runnable {
     Image quit;
     Image title;
     Image road;
+
+    Car car;
     
     boolean pressPlay;
     boolean pressQuit;
@@ -40,6 +42,9 @@ public class CarGame extends JFrame implements Runnable {
     
     Color color;
     Color color2;
+    
+    int mouseX;
+    int mouseY;
     
     double framerate = 60.0;
 
@@ -67,7 +72,9 @@ public class CarGame extends JFrame implements Runnable {
                 if (e.BUTTON1 == e.getButton()) {
                     if(gameState == GameState.Menu){
                         if(pressPlay)
-                        gameState = GameState.Ingame;
+                            gameState = GameState.Ingame;
+                        else if(pressQuit)
+                            System.exit(0);
                     }
                     else if(gameState == GameState.CarSelect){
                         
@@ -98,20 +105,30 @@ public class CarGame extends JFrame implements Runnable {
             public void mouseMoved(MouseEvent e) {
                 int xpos = e.getX();
                 int ypos = e.getY();
-                if (xpos >= 564 && xpos <= 865 && ypos >= 333 && ypos <= 435) {
-                    color = Color.yellow;
-                    pressPlay = true;
-                } else {
-                    pressPlay = false;
-                    color = Color.black;
+                if(gameState == GameState.Menu){
+                    if (xpos >= 564 && xpos <= 865 && ypos >= 333 && ypos <= 435) {
+                        color = Color.yellow;
+                        pressPlay = true;
+                    } else {
+                        pressPlay = false;
+                        color = Color.black;
+                    }
+                    if (xpos >= 1064 && xpos <= 1365 && ypos >= 334 && ypos <= 434) {
+                        color2 = Color.yellow;
+                        pressQuit = true;
+
+                    } else {
+                        pressQuit = false;
+                        color2 = Color.black;
+                    }   
                 }
-                                if (xpos >= 1064 && xpos <= 1365 && ypos >= 334 && ypos <= 434) {
-                    color2 = Color.yellow;
-                    pressQuit = true;
-                            
-                } else {
-                                    pressQuit = false;
-                    color2 = Color.black;
+                else if(gameState == GameState.CarSelect){
+                    
+                }
+                else if(gameState == GameState.Ingame){
+                    mouseX = xpos;
+                    mouseY = ypos;
+                    
                 }
           
 
@@ -180,25 +197,26 @@ public class CarGame extends JFrame implements Runnable {
            
            
             
-             g.setColor(color);
+            g.setColor(color);
             g.fillRoundRect(565, 335, 300, 100, 10, 10);
             g.setColor(color2);
             g.fillRoundRect(1065, 335, 300, 100, 10, 10);
-           g.setColor(Color.white);
+            g.setColor(Color.white);
             g.drawImage(play,Window.getX(600),Window.getY(320),196,81,this);
-            g.drawImage(quit,Window.getX(1100),Window.getY(320),196,81,this);
+            g.drawImage(quit,Window.getX(1100),Window.getY(310),196,81,this);
             g.drawImage(title,Window.getX(725),Window.getY(120),476,81,this);
             
             
             
         }
         else if(gameState == GameState.CarSelect){
-            
+            g.drawImage(menuImage,Window.getX(0),Window.getY(0),Window.getWidth2(),Window.getHeight2(),this);
         }
-        else if(gameState == GameState.Ingame){
-            
-             g.drawImage(road,Window.getX(road1x),Window.getY(road1y),Window.getWidth2(),Window.getHeight2()+5,this);
-             g.drawImage(road,Window.getX(road2x),Window.getY(road2y+25),Window.getWidth2(),Window.getHeight2()+5,this);
+        else if(gameState == GameState.Ingame){            
+            g.drawImage(road,Window.getX(road1x),Window.getY(road1y),Window.getWidth2(),Window.getHeight2()+5,this);
+            g.drawImage(road,Window.getX(road2x),Window.getY(road2y+25),Window.getWidth2(),Window.getHeight2()+5,this);
+             
+           car.draw(g, this);
         }
         
         gOld.drawImage(image, 0, 0, null);
@@ -210,7 +228,7 @@ public class CarGame extends JFrame implements Runnable {
         while (true) {
             animate();
             repaint();
-            double seconds = 1 / framerate;    //time that 1 frame takes.
+            double seconds = 1/framerate;    //time that 1 frame takes.
             int miliseconds = (int) (1000.0 * seconds);
             try {
                 Thread.sleep(miliseconds);
@@ -225,6 +243,8 @@ public class CarGame extends JFrame implements Runnable {
      road1y = 0;
      road2x = 0;
      road2y = - Window.getHeight2();
+     
+     car = new Car(1);
     }
 /////////////////////////////////////////////////////////////////////////
 
@@ -259,6 +279,9 @@ public class CarGame extends JFrame implements Runnable {
             road2y += 10;
             if(road2y >= Window.getHeight2())
             road2y = -Window.getHeight2() +25 ;
+            
+            car.setCarLocation(mouseX,mouseY);
+            car.calcAngle(mouseX,mouseY);
         }
 
 
