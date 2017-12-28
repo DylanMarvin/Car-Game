@@ -20,7 +20,7 @@ public class Car {
     
     Car(int i){
         carX = Window.getWidth2()/2;
-        carY = Window.getHeight2()/3;
+        carY = 600;
         carImage[i] = Toolkit.getDefaultToolkit().getImage("assets/car" + i +".png");
         carNum = i;
 
@@ -34,9 +34,13 @@ public class Car {
     public void tick(int mouseX,int mouseY){
         calcAngle(mouseX, mouseY);
         
+        //if(){
+            
+        //}
+        
         if(moveValid(carX,carY,mouseX,mouseY,30)){
             carX += xMov;       
-            carY += yMov;
+            
         }
         
         
@@ -79,7 +83,7 @@ public class Car {
         dist/=10;
 
         xMov = (mouseX-carX)/dist;   
-        yMov = (mouseY-carY)/dist;
+        
     }
     
     public boolean moveValid(double pX,double pY,double mX, double mY,double pSize){

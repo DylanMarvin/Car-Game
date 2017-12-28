@@ -265,8 +265,7 @@ public class CarGame extends JFrame implements Runnable {
             quit = Toolkit.getDefaultToolkit().getImage("assets/Quit.png");
             title = Toolkit.getDefaultToolkit().getImage("assets/title.png");
             road = Toolkit.getDefaultToolkit().getImage("assets/road.png");
-            Obstacles.initSprites();
-            Obstacles.Create(1, Obstacles.Type.Car);
+            Obstacles.initSprites();            
             reset();
 
         }
@@ -298,11 +297,11 @@ public class CarGame extends JFrame implements Runnable {
             car.tick(mouseX,mouseY);
             
             Obstacles.Tick();
-            
+           
+            if(timeCount % 50 == 1)
+                Obstacles.Create(1, Obstacles.Type.Car);
             if(timeCount % 150 == 1)
-               // Obstacles.Create(0, Obstacles.Type.TrashCan);
-            if(timeCount % 100 == 1)
-                
+                Obstacles.Create(0, Obstacles.Type.TrashCan);
             timeCount++;
         }
 

@@ -35,7 +35,7 @@ public class Obstacles {
             scale = 2;
         }
         
-        ypos = 300;
+        ypos = -50;
         type = _type;
         image = _image;
     }
@@ -67,7 +67,7 @@ public class Obstacles {
     }
     
     public boolean tick(){
-        //ypos += 15;
+        ypos += 15;
         if(ypos >= Window.getHeight2()+50)
             obstacles.remove(this);
         return false;
@@ -97,6 +97,7 @@ public class Obstacles {
         }
         return(loop);
     }    
+    
     public boolean hitBox(int carx,int cary){
         if(type == Type.Car){
             if( (carx + 50) > xpos-30 && (carx - 50) < xpos + 30  && (cary + 50) > ypos - 70 && (cary - 50) < ypos -45){
