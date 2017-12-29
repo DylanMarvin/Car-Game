@@ -119,7 +119,9 @@ public class Obstacles {
             }
         }
         else if(type == Type.TrashCan){
-            
+             if( (carx + 30) > xpos-30 && (carx - 30) < xpos + 30  && (cary + 40) > ypos - 40 && (cary - 30) < ypos + 20){
+                
+             }
         }
         
         return false;

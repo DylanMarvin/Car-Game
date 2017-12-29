@@ -44,6 +44,8 @@ public class CarGame extends JFrame implements Runnable {
     int road2x;
     int road2y;
     
+    int life;
+    
     int timer;
     
     Color color;
@@ -288,6 +290,7 @@ public class CarGame extends JFrame implements Runnable {
         road2x = 0;
         road2y = - Window.getHeight2();
         timer = 0;
+        life = 3;
 
         car = new Car(1);
         score = 0;
