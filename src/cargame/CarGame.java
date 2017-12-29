@@ -22,6 +22,7 @@ public class CarGame extends JFrame implements Runnable {
     boolean animateFirstTime = true;
     Image image;
     Graphics2D g;
+    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
     GameState gameState = GameState.Menu;
     Image menuImage;
@@ -32,6 +33,8 @@ public class CarGame extends JFrame implements Runnable {
     Image explosion;
 
     Car car;
+    int score;
+    Font customFont;
     
     boolean pressPlay;
     boolean pressQuit;
@@ -222,20 +225,39 @@ public class CarGame extends JFrame implements Runnable {
             g.drawImage(road,Window.getX(road2x),Window.getY(road2y+25),Window.getWidth2(),Window.getHeight2()+5,this);
            if(gameOver != true){
                   car.draw(g, this);
-        }
+            }
            else{
                
             if(timer == 1)
-            g.drawImage(explosion,Window.getX(car.getX()-50),Window.getY(car.getY()-50),100,100,this);
-             if(timer == 2)
-            g.drawImage(explosion,Window.getX(car.getX()-45),Window.getY(car.getY()-45),100,100,this);
-             if(timer ==3)
-            g.drawImage(explosion,Window.getX(car.getX()-55),Window.getY(car.getY()-55),100,100,this);
-             if(timer == 4)
-            g.drawImage(explosion,Window.getX(car.getX()-53),Window.getY(car.getY()-43),100,100,this);
-           }
-           Obstacles.Draw(g, this);
-        }
+                g.drawImage(explosion,Window.getX(car.getX()-50),Window.getY(car.getY()-50),100,100,this);
+            else if(timer == 2)
+                g.drawImage(explosion,Window.getX(car.getX()-45),Window.getY(car.getY()-45),100,100,this);
+            else if(timer ==3)
+                g.drawImage(explosion,Window.getX(car.getX()-55),Window.getY(car.getY()-55),100,100,this);
+            else if(timer == 4)
+                g.drawImage(explosion,Window.getX(car.getX()-53),Window.getY(car.getY()-43),100,100,this);
+            }
+            Obstacles.Draw(g, this);
+            
+
+            customFont = new Font("8BIT WONDER",Font.PLAIN,25);
+            g.setFont(customFont);
+            
+            g.setColor(Color.black);
+            if(score < 100)
+                g.drawString("Score 000" + score, Window.getX(1600), Window.getY(50));
+            else if(score < 1000)
+                g.drawString("Score 00" + score, Window.getX(1600), Window.getY(50));
+            else if(score < 10000)
+                g.drawString("Score 0" + score, Window.getX(1600), Window.getY(50));       
+            else if(score < 100000)
+                g.drawString("Score " + score, Window.getX(1600), Window.getY(50));     
+                       
+            
+
+            
+}
+
         else if (gameState == GameState.Over){
               
         }
@@ -268,6 +290,7 @@ public class CarGame extends JFrame implements Runnable {
         timer = 0;
 
         car = new Car(1);
+        score = 0;
     }
 /////////////////////////////////////////////////////////////////////////
 
@@ -285,8 +308,9 @@ public class CarGame extends JFrame implements Runnable {
             title = Toolkit.getDefaultToolkit().getImage("assets/title.png");
             road = Toolkit.getDefaultToolkit().getImage("assets/road.png");
             explosion = Toolkit.getDefaultToolkit().getImage("assets/explosion.gif");
+            Obstacles.initSprites(); 
             
-            Obstacles.initSprites();            
+            Fonts.addFont(new Fonts("8-BIT WONDER.TTF"));
            
             reset();
 
@@ -333,6 +357,9 @@ public class CarGame extends JFrame implements Runnable {
             if(timeCount % 150 == 1)
                 Obstacles.Create(0, Obstacles.Type.TrashCan);
           
+            if(timeCount % 5 == 1){
+                score++;
+            }
                
             timeCount++;
          

@@ -20,7 +20,7 @@ public class Car {
     
     Car(int i){
         carX = Window.getWidth2()/2;
-        carY = 600;
+        carY = 870;
         carImage[i] = Toolkit.getDefaultToolkit().getImage("assets/car" + i +".png");
         carNum = i;
 
