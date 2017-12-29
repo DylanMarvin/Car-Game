@@ -242,22 +242,25 @@ public class CarGame extends JFrame implements Runnable {
             Obstacles.Draw(g, this);
             
 
-            customFont = new Font("8BIT WONDER",Font.PLAIN,25);
+            customFont = new Font("Perfect DOS VGA 437",Font.PLAIN,40);
             g.setFont(customFont);
             
             g.setColor(Color.black);
             if(score < 100)
-                g.drawString("Score 000" + score, Window.getX(1600), Window.getY(50));
+                g.drawString("Score: 000" + score, Window.getX(1600), Window.getY(50));
             else if(score < 1000)
-                g.drawString("Score 00" + score, Window.getX(1600), Window.getY(50));
+                g.drawString("Score: 00" + score, Window.getX(1600), Window.getY(50));
             else if(score < 10000)
-                g.drawString("Score 0" + score, Window.getX(1600), Window.getY(50));       
+                g.drawString("Score: 0" + score, Window.getX(1600), Window.getY(50));       
             else if(score < 100000)
                 g.drawString("Score " + score, Window.getX(1600), Window.getY(50));     
             
-             g.drawString("Lives " + car.getLife(), Window.getX(50), Window.getY(50));
-             
-
+            g.drawString("Lives ", Window.getX(50), Window.getY(50));
+            int count = 0;
+            for(int i = 180;count<car.getLife();i+=40){
+                g.drawImage(car.getImage(),Window.getX(i),Window.getY(25),30,30,this);
+                count++;
+            }
             
 }
 
@@ -293,7 +296,7 @@ public class CarGame extends JFrame implements Runnable {
         timer = 0;
         
 
-        car = new Car(1);
+        car = new Car(0);
         score = 0;
     }
 /////////////////////////////////////////////////////////////////////////
@@ -306,6 +309,7 @@ public class CarGame extends JFrame implements Runnable {
                 Window.xsize = getSize().width;
                 Window.ysize = getSize().height;
             }
+            Car.initSprites();
             menuImage = Toolkit.getDefaultToolkit().getImage("assets/menuImage2.png");
             play = Toolkit.getDefaultToolkit().getImage("assets/Play.png");
             quit = Toolkit.getDefaultToolkit().getImage("assets/Quit.png");
@@ -314,7 +318,7 @@ public class CarGame extends JFrame implements Runnable {
             explosion = Toolkit.getDefaultToolkit().getImage("assets/explosion.gif");
             Obstacles.initSprites(); 
             
-            Fonts.addFont(new Fonts("8-BIT WONDER.TTF"));
+            Fonts.addFont(new Fonts("8BitFont.TTF"));
            
             reset();
 

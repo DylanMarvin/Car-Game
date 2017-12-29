@@ -7,9 +7,10 @@ import java.awt.Toolkit;
 
 
 public class Car {
-    Image carImage[] = new Image[5];
+    private static Image carSprites[] = new Image[5];
     int carNum;
     
+    Image carImage;
     int carX;
     int carY;
     double angle;
@@ -22,10 +23,13 @@ public class Car {
     Car(int i){
         carX = Window.getWidth2()/2;
         carY = 870;
-        carImage[i] = Toolkit.getDefaultToolkit().getImage("assets/car" + i +".png");
+        carImage = carSprites[i];
         carNum = i;
         life = 3;
 
+    }
+    public static void initSprites(){
+        carSprites[0] = Toolkit.getDefaultToolkit().getImage("assets/car1.png");
     }
 
     
@@ -65,10 +69,10 @@ public class Car {
         g.rotate(rot  * Math.PI/180.0);
         g.scale( xscale , yscale );
         
-        int width = carImage[carNum].getWidth(obj);
-        int height = carImage[carNum].getHeight(obj);
+        int width = carImage.getWidth(obj);
+        int height = carImage.getHeight(obj);
 
-        g.drawImage(carImage[carNum],-width/2,-height/2,width,height,obj);
+        g.drawImage(carImage,-width/2,-height/2,width,height,obj);
 
         g.scale( 1.0/xscale,1.0/yscale );
         g.rotate(-rot  * Math.PI/180.0);
@@ -117,6 +121,9 @@ public class Car {
     }
     public void substractLife(){
         life--;
+    }
+    public Image getImage(){
+        return carImage;
     }
 
 
