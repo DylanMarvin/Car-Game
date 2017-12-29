@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Obstacles {
     private static ArrayList<Obstacles> obstacles = new ArrayList<Obstacles>();
-    private static Image sprites[] = new Image[2];
+    private static Image sprites[] = new Image[3];
     private int xpos;
     private int ypos;
     private Image image;
@@ -28,9 +28,22 @@ public class Obstacles {
             }
             angle = 0;
             scale = 3;
+            
         }
+        else if(_type == Type.Tree){
+            if((int) (Math.random()*2+1) == 1){
+                xpos = (int) (Math.random()*60+320);
+                angle = 90;
+            }
+            else{
+                xpos = (int) (Math.random()*60+1650);
+                angle = -90;
+            }
+            
+            scale = 1;
+         }
         else{
-            xpos = (int) (Math.random()*1310+320);
+            xpos = (int) (Math.random()*1310+220);
             angle = 180;
             scale = 2;
         }
@@ -60,6 +73,7 @@ public class Obstacles {
     public static void initSprites(){
         sprites[0] = Toolkit.getDefaultToolkit().createImage("assets/trashCan.png");
         sprites[1] = Toolkit.getDefaultToolkit().createImage("assets/obstacle1.png");
+        
     }
     
     public void draw(Graphics2D g,CarGame obj){
@@ -100,7 +114,7 @@ public class Obstacles {
     
     public boolean hitBox(int carx,int cary){
         if(type == Type.Car){
-            if( (carx + 50) > xpos-30 && (carx - 50) < xpos + 30  && (cary + 50) > ypos - 70 && (cary - 50) < ypos -45){
+            if( (carx + 30) > xpos-30 && (carx - 30) < xpos + 30  && (cary + 40) > ypos - 40 && (cary - 30) < ypos + 45){
                 return true;
             }
         }

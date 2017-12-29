@@ -29,6 +29,7 @@ public class CarGame extends JFrame implements Runnable {
     Image quit;
     Image title;
     Image road;
+    Image explosion;
 
     Car car;
     
@@ -217,9 +218,16 @@ public class CarGame extends JFrame implements Runnable {
         else if(gameState == GameState.Ingame){            
             g.drawImage(road,Window.getX(road1x),Window.getY(road1y),Window.getWidth2(),Window.getHeight2()+5,this);
             g.drawImage(road,Window.getX(road2x),Window.getY(road2y+25),Window.getWidth2(),Window.getHeight2()+5,this);
-             
-           car.draw(g, this);
+           if(gameOver != true){
+                  car.draw(g, this);
+        }
+           else{
+            g.drawImage(explosion,Window.getX(car.getX()-50),Window.getY(car.getY()-50),100,100,this);
+           }
            Obstacles.Draw(g, this);
+        }
+        else if (gameState == GameState.Over){
+              
         }
         
         gOld.drawImage(image, 0, 0, null);
@@ -265,13 +273,17 @@ public class CarGame extends JFrame implements Runnable {
             quit = Toolkit.getDefaultToolkit().getImage("assets/Quit.png");
             title = Toolkit.getDefaultToolkit().getImage("assets/title.png");
             road = Toolkit.getDefaultToolkit().getImage("assets/road.png");
+            explosion = Toolkit.getDefaultToolkit().getImage("assets/explosion.gif");
+            
             Obstacles.initSprites();            
+           
             reset();
 
         }
         gameOver = Obstacles.HitBox(car.getX(), car.getY());
         if(gameOver){
-            //gameState = GameState.Over;
+            
+//            gameState = GameState.Over;
             return;
         }
        
@@ -299,9 +311,11 @@ public class CarGame extends JFrame implements Runnable {
             Obstacles.Tick();
            
             if(timeCount % 50 == 1)
-                Obstacles.Create(1, Obstacles.Type.Car);
+                 Obstacles.Create(1, Obstacles.Type.Car);
             if(timeCount % 150 == 1)
                 Obstacles.Create(0, Obstacles.Type.TrashCan);
+          
+               
             timeCount++;
         }
 
