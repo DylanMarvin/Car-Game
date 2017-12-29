@@ -101,29 +101,31 @@ public class Obstacles {
         g.rotate(-rot  * Math.PI/180.0);
         g.translate(-xpos,-ypos);
     }
-    public static boolean HitBox(int x,int y){
-        boolean loop = false;
+    public static int HitBox(int x,int y){
+        int loop = 0;
         for(int i = 0;i<obstacles.size();i++){
             loop = obstacles.get(i).hitBox(x,y);
             
-            if(loop == true)
+            if(loop > 0)
                 break;
         }
         return(loop);
     }    
     
-    public boolean hitBox(int carx,int cary){
+    public int hitBox(int carx,int cary){
         if(type == Type.Car){
             if( (carx + 30) > xpos-30 && (carx - 30) < xpos + 30  && (cary + 40) > ypos - 40 && (cary - 30) < ypos + 45){
-                return true;
+                obstacles.remove(this);
+                return 1;
             }
         }
         else if(type == Type.TrashCan){
              if( (carx + 30) > xpos-30 && (carx - 30) < xpos + 30  && (cary + 40) > ypos - 40 && (cary - 30) < ypos + 20){
-                
+                 obstacles.remove(this);
+                return 2;
              }
         }
         
-        return false;
+        return 0;
     }
 }

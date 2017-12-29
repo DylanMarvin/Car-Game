@@ -17,12 +17,14 @@ public class Car {
     double xMov;
     double yMov;
     
+    int life;
     
     Car(int i){
         carX = Window.getWidth2()/2;
         carY = 870;
         carImage[i] = Toolkit.getDefaultToolkit().getImage("assets/car" + i +".png");
         carNum = i;
+        life = 3;
 
     }
 
@@ -103,11 +105,18 @@ public class Car {
             return true;
     }
     
+    
     public int getX(){
         return carX;
     }
     public int getY(){
         return carY;
+    }
+    public int getLife(){
+        return life;
+    }
+    public void substractLife(){
+        life--;
     }
 
 
