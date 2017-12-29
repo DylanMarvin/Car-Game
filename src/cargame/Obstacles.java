@@ -43,7 +43,7 @@ public class Obstacles {
             scale = 1;
          }
         else{
-            xpos = (int) (Math.random()*1310+220);
+            xpos = (int) (Math.random()*1060+440);
             angle = 180;
             scale = 2;
         }

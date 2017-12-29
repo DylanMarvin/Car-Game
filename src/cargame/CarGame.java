@@ -41,6 +41,8 @@ public class CarGame extends JFrame implements Runnable {
     int road2x;
     int road2y;
     
+    int timer;
+    
     Color color;
     Color color2;
     
@@ -222,7 +224,15 @@ public class CarGame extends JFrame implements Runnable {
                   car.draw(g, this);
         }
            else{
+               
+            if(timer == 1)
             g.drawImage(explosion,Window.getX(car.getX()-50),Window.getY(car.getY()-50),100,100,this);
+             if(timer == 2)
+            g.drawImage(explosion,Window.getX(car.getX()-45),Window.getY(car.getY()-45),100,100,this);
+             if(timer ==3)
+            g.drawImage(explosion,Window.getX(car.getX()-55),Window.getY(car.getY()-55),100,100,this);
+             if(timer == 4)
+            g.drawImage(explosion,Window.getX(car.getX()-53),Window.getY(car.getY()-43),100,100,this);
            }
            Obstacles.Draw(g, this);
         }
@@ -255,6 +265,7 @@ public class CarGame extends JFrame implements Runnable {
         road1y = 0;
         road2x = 0;
         road2y = - Window.getHeight2();
+        timer = 0;
 
         car = new Car(1);
     }
@@ -282,7 +293,14 @@ public class CarGame extends JFrame implements Runnable {
         }
         gameOver = Obstacles.HitBox(car.getX(), car.getY());
         if(gameOver){
-            
+            System.out.println(timer);
+            if(timeCount % 25 == 1){
+                timer++;
+                if (timer == 5){
+                    timer = 0;
+                }
+            }
+            timeCount++;
 //            gameState = GameState.Over;
             return;
         }
@@ -317,7 +335,10 @@ public class CarGame extends JFrame implements Runnable {
           
                
             timeCount++;
+         
+            
         }
+        
 
 
     }
