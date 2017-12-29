@@ -34,9 +34,19 @@ public class Car {
     public void tick(int mouseX,int mouseY){
         calcAngle(mouseX, mouseY);
         
-        //if(){
+        if( (carX + xMov) > 1600){
+             carX = 1600;
+        }
+        else if((carX + xMov) < 350){
+            carX = 350;
+        }
             
-        //}
+        if(angle >= 90){
+            angle = 90;
+        }
+        else if(angle < -90){
+            angle = -90;
+        }
         
         if(moveValid(carX,carY,mouseX,mouseY,30)){
             carX += xMov;       
