@@ -30,8 +30,15 @@ public class Car {
     }
     public static void initSprites(){
         carSprites[0] = Toolkit.getDefaultToolkit().getImage("assets/car1.png");
+        carSprites[1] = Toolkit.getDefaultToolkit().getImage("assets/car2.png");
+        carSprites[2] = Toolkit.getDefaultToolkit().getImage("assets/car3.png");
+        carSprites[3] = Toolkit.getDefaultToolkit().getImage("assets/car4.png");
+        
     }
 
+    public static Image getSprite(int num){
+        return carSprites[num];
+    }
     
     public void draw(Graphics2D g,CarGame obj){
             drawCar(g,Window.getX(carX),Window.getY(carY),angle,3,3,obj);
