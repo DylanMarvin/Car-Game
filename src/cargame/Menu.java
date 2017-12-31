@@ -113,5 +113,8 @@ public class Menu {
             carNum = 3;
     }
     
+    public int getCarNum(){
+        return carNum;
+    }
    
 }

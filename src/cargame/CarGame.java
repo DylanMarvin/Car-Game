@@ -87,7 +87,7 @@ public class CarGame extends JFrame implements Runnable {
                         }
                         else if(xpos >=761 && xpos <=1152 && ypos >= 851 && ypos <= 924 ){
                                gameState = GameState.Ingame;
-                               
+                               car = new Car(menu.getCarNum());
                         }
                     }
                     else if(gameState == GameState.Ingame){
@@ -234,7 +234,7 @@ public class CarGame extends JFrame implements Runnable {
             
             g.setFont(customFont);
             
-            g.setColor(Color.black);
+            g.setColor(Color.white);
             if(score < 100)
                 g.drawString("Score: 000" + score, Window.getX(1600), Window.getY(50));
             else if(score < 1000)
@@ -246,8 +246,8 @@ public class CarGame extends JFrame implements Runnable {
             
             g.drawString("Lives ", Window.getX(50), Window.getY(50));
             int count = 0;
-            for(int i = 180;count<car.getLife();i+=40){
-                g.drawImage(car.getImage(),Window.getX(i),Window.getY(25),30,30,this);
+            for(int i = 190;count<car.getLife();i+=40){
+                g.drawImage(car.getImage(),Window.getX(i),Window.getY(25),22,28,this);
                 count++;
             }
             
@@ -353,7 +353,7 @@ public class CarGame extends JFrame implements Runnable {
             Obstacles.Tick();
            
             if(timeCount % 50 == 1)
-                 Obstacles.Create(1, Obstacles.Type.Car);
+                 Obstacles.Create(3, Obstacles.Type.Car);
             if(timeCount % 150 == 1)
                 Obstacles.Create(0, Obstacles.Type.TrashCan);
           

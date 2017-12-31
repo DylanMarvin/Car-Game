@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Obstacles {
     private static ArrayList<Obstacles> obstacles = new ArrayList<Obstacles>();
-    private static Image sprites[] = new Image[3];
+    private static Image sprites[] = new Image[4];
     private int xpos;
     private int ypos;
     private Image image;
@@ -72,7 +72,9 @@ public class Obstacles {
     
     public static void initSprites(){
         sprites[0] = Toolkit.getDefaultToolkit().createImage("assets/trashCan.png");
-        sprites[1] = Toolkit.getDefaultToolkit().createImage("assets/obstacle1.png");
+        sprites[1] = Toolkit.getDefaultToolkit().createImage("assets/redCar.png");
+        sprites[2] = Toolkit.getDefaultToolkit().createImage("assets/truck.png");
+        sprites[3] = Toolkit.getDefaultToolkit().createImage("assets/greenCar.png");
         
     }
     
