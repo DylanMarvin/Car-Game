@@ -129,9 +129,13 @@ public class Car {
     public void substractLife(){
         life--;
     }
+
     public Image getImage(){
         return carImage;
     }
+
+
+  
 
 
     

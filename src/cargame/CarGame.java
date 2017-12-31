@@ -85,6 +85,10 @@ public class CarGame extends JFrame implements Runnable {
                         else if(xpos >=1225 && xpos <=1295 && ypos >= 490 && ypos <= 615){
                             menu.addCarNum();
                         }
+                        else if(xpos >=761 && xpos <=1152 && ypos >= 851 && ypos <= 924 ){
+                               gameState = GameState.Ingame;
+                               
+                        }
                     }
                     else if(gameState == GameState.Ingame){
 
