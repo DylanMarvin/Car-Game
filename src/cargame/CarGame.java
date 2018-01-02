@@ -24,7 +24,7 @@ public class CarGame extends JFrame implements Runnable {
     Graphics2D g;    
 
     GameState gameState = GameState.Menu;
-
+    Spawner spawner;
 
     Car car;
     int score;
@@ -32,17 +32,15 @@ public class CarGame extends JFrame implements Runnable {
     
     Menu menu = new Menu();
     
-    int road1x;
-    int road1y;
-    int road2x;
-    int road2y;
+    Road road1;
+    Road road2;
+    Road road3;
     
-    int carNum;
     
     
     int timer;
     
-    
+   
     int mouseX;
     int mouseY;
     
@@ -60,6 +58,7 @@ public class CarGame extends JFrame implements Runnable {
         frame.setLocationRelativeTo(null);
         frame.setExtendedState(MAXIMIZED_BOTH);
         frame.setResizable(true);
+        
     }
 
     public CarGame() {
@@ -211,9 +210,15 @@ public class CarGame extends JFrame implements Runnable {
             menu.draw(g, this, gameState);
             
         }
-        else if(gameState == GameState.Ingame){            
-            g.drawImage(menu.getRoadImage(),Window.getX(road1x),Window.getY(road1y),Window.getWidth2(),Window.getHeight2()+5,this);
-            g.drawImage(menu.getRoadImage(),Window.getX(road2x),Window.getY(road2y+25),Window.getWidth2(),Window.getHeight2()+5,this);
+        else if(gameState == GameState.Ingame){ 
+            
+            
+            
+            //Road Draw
+            road1.draw(g, this);
+            road2.draw(g, this);
+            road3.draw(g, this);
+            
            if(gameOver != true){
                   car.draw(g, this);
             }
@@ -278,13 +283,14 @@ public class CarGame extends JFrame implements Runnable {
 /////////////////////////////////////////////////////////////////////////
     public void reset() {
         timeCount = 0;
-        road1x = 0;
-        road1y = 0;
-        road2x = 0;
-        road2y = - Window.getHeight2();
+        road1 = new Road(0,0);
+        road2 = new Road(0,-Window.getHeight2());
+        road3 = new Road(0,(-Window.getHeight2() * 2));
+        
         timer = 0;
         
         menu = new Menu();
+        spawner = new Spawner();
 
         car = new Car(0);
         score = 0;
@@ -302,9 +308,10 @@ public class CarGame extends JFrame implements Runnable {
             Car.initSprites();
             Menu.initImages();           
             Obstacles.initSprites(); 
+            Road.initImage();
             
             Fonts.addFont(new Fonts("8BitFont.TTF"));
-            customFont = new Font("Perfect DOS VGA 437",Font.PLAIN,40);
+            customFont = new Font("Perfect DOS VGA 437",Font.PLAIN,40);            
             reset();
 
         }
@@ -314,7 +321,7 @@ public class CarGame extends JFrame implements Runnable {
         if(car.getLife() == 0)
             gameOver = true;
         if(gameOver){
-            System.out.println(timer);
+            
             if(timeCount % 25 == 1){
                 timer++;
                 if (timer == 5){
@@ -339,24 +346,17 @@ public class CarGame extends JFrame implements Runnable {
         }
         else if(gameState == GameState.Ingame){
             
-            road1y += 10;
-            if(road1y >= Window.getHeight2())
-                road1y = -Window.getHeight2()+25;
+            road1.tick();
+            road2.tick();
+            road3.tick();
             
-            road2y += 10;
-            if(road2y >= Window.getHeight2())
-                road2y = -Window.getHeight2() +25 ;
             
             
             car.tick(mouseX,mouseY);
             
             Obstacles.Tick();
-           
-            if(timeCount % 50 == 1)
-                 Obstacles.Create(3, Obstacles.Type.Car);
-            if(timeCount % 150 == 1)
-                Obstacles.Create(0, Obstacles.Type.TrashCan);
-          
+            spawner.tick();
+            
             if(timeCount % 5 == 1){
                 score++;
             }
