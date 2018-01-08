@@ -62,8 +62,7 @@ public class Car {
         }
         
         if(moveValid(carX,carY,mouseX,mouseY,30)){
-            carX += xMov;       
-            
+            carX += xMov;                  
         }
         
         
