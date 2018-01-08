@@ -242,11 +242,11 @@ public class CarGame extends JFrame implements Runnable {
             if(gameOver == true){
                 g.setComposite(AlphaComposite.SrcOver.derive(1f - (float) alpha));
 
-                g.drawImage(Menu.menuImage,Window.getX(0),Window.getY(0),Window.getWidth2(),Window.getHeight2(),this);
+                HighScore.Draw(g,this);
             }
             
         } else if (gameState == GameState.Over) {
-            g.drawImage(Menu.menuImage,Window.getX(0),Window.getY(0),Window.getWidth2(),Window.getHeight2(),this);
+            
              
             g.setFont(customFont);
             g.setColor(Color.white);
@@ -301,7 +301,7 @@ public class CarGame extends JFrame implements Runnable {
 
             Fonts.addFont(new Fonts("8BitFont.TTF"));
             customFont = new Font("Perfect DOS VGA 437", Font.PLAIN, 40);
-            highScore = Toolkit.getDefaultToolkit().getImage("assets/highScore.png");
+            
             Road.Create();
             reset();
 
