@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class HighScore {
     private static HighScore HighScores[] = new HighScore[10];
     private static Image highscore = Toolkit.getDefaultToolkit().getImage("assets/highScore.png");
+    private static boolean setHigh;
     private int highScore;
     private String name;
     private int val;
@@ -26,7 +27,7 @@ public class HighScore {
         g.drawImage(highscore,Window.getX(750),Window.getY(100),447,88,obj);
         
         for(int i = 7;i<12;i++){
-            g.drawLine(Window.getX(i*100), Window.getY(515), Window.getX((i*100)+60), Window.getY(515));
+            g.drawLine(Window.getX(i*100), Window.getY(315), Window.getX((i*100)+60), Window.getY(315));
             
         }
         

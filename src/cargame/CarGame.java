@@ -42,6 +42,7 @@ public class CarGame extends JFrame implements Runnable {
     
     
 
+    String name;
     
     int mouseX;
     int mouseY;
@@ -88,7 +89,12 @@ public class CarGame extends JFrame implements Runnable {
                         }
                     } else if (gameState == GameState.Ingame) {
 
+                    } else if(gameState == GameState.Over){
+                        //if(xpos ){
+                            
+                        //}
                     }
+                    
 
                 }
 
@@ -341,6 +347,7 @@ public class CarGame extends JFrame implements Runnable {
 //          gameState = GameState.Over;
             return;
         }
+
         
 
         if (gameState == GameState.Menu) {
@@ -363,8 +370,8 @@ public class CarGame extends JFrame implements Runnable {
 
             if (timeCount % 5 == 1) {
                 score++;
-                
-                if (Obstacles.HitBox(car.getX(), car.getY()) == 2) {
+               
+        if (Obstacles.HitBox(car.getX(), car.getY()) == 2) {
             
              trashSound = new sound("assets/trashSound.wav");
                 score += 100;
@@ -372,7 +379,9 @@ public class CarGame extends JFrame implements Runnable {
         }
         }
         else if(gameState == GameState.Over){
-
+            if(HighScore.checkHighScore(score) > 0){
+                HighScore.setNewHigh(name, score, HighScore.checkHighScore(score));
+            }
                   
         }
 
