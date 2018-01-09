@@ -9,12 +9,15 @@ import java.util.ArrayList;
 public class Obstacles {
     private static ArrayList<Obstacles> obstacles = new ArrayList<Obstacles>();
     private static Image sprites[] = new Image[4];
+    private static Image onehundred;
     private int xpos;
     private int ypos;
     private Image image;
     private Type type;
     private double angle;
     private double scale;
+    private boolean active;
+    private int timecount;
     public static enum Type{
         Tree,TrashCan,Car
     };
@@ -51,6 +54,8 @@ public class Obstacles {
         ypos = -50;
         type = _type;
         image = _image;
+        active = true;
+        
     }
     public static void Draw(Graphics2D g,CarGame obj){
         for(int i =0;i<obstacles.size();i++){
@@ -61,6 +66,7 @@ public class Obstacles {
     public static void Tick(){
        for(int i =0;i<obstacles.size();i++){
             obstacles.get(i).tick();
+            
         }
     }
     
@@ -75,15 +81,23 @@ public class Obstacles {
         sprites[1] = Toolkit.getDefaultToolkit().createImage("assets/redCar.png");
         sprites[2] = Toolkit.getDefaultToolkit().createImage("assets/truck.png");
         sprites[3] = Toolkit.getDefaultToolkit().createImage("assets/greenCar.png");
+        onehundred = Toolkit.getDefaultToolkit().createImage("assets/100.png");
         
     }
     
     public void draw(Graphics2D g,CarGame obj){
+        if(active == true)
         drawObstacle(g,Window.getX(xpos),Window.getY(ypos),angle,scale,scale,obj);
+        else if(active == false){
+            g.drawImage(onehundred,Window.getX(xpos),Window.getY(ypos),216,65,obj);
+        }
     }
     
     public boolean tick(){
+        
         ypos += 15;
+        
+            
         if(ypos >= Window.getHeight2()+50)
             obstacles.remove(this);
         return false;
@@ -122,8 +136,12 @@ public class Obstacles {
             }
         }
         else if(type == Type.TrashCan){
-             if( (carx + 30) > xpos-30 && (carx - 30) < xpos + 30  && (cary + 40) > ypos - 40 && (cary - 30) < ypos + 20){
-                 obstacles.remove(this);
+             if( (carx + 30) > xpos-30 && (carx - 30) < xpos + 30  && (cary + 40) > ypos - 40 && (cary - 30) < ypos + 20 && active == true){
+                 
+                 active = false;
+                 timecount = 3;
+                  //obstacles.remove(this);   
+                 
                 return 2;
              }
         }

@@ -34,9 +34,13 @@ public class CarGame extends JFrame implements Runnable {
     Font customFont;
     Menu menu = new Menu();
     sound explosion;
+    sound mainSound;
+    sound trashSound;
     double alpha = 1.0f;  
     int timer;
     Image highScore;
+    
+    
 
     
     int mouseX;
@@ -293,6 +297,7 @@ public class CarGame extends JFrame implements Runnable {
             if (Window.xsize != getSize().width || Window.ysize != getSize().height) {
                 Window.xsize = getSize().width;
                 Window.ysize = getSize().height;
+                 mainSound = new sound("assets/mainMenu.wav");
             }
             Car.initSprites();
             Menu.initImages();
@@ -336,13 +341,15 @@ public class CarGame extends JFrame implements Runnable {
 //          gameState = GameState.Over;
             return;
         }
-        if (Obstacles.HitBox(car.getX(), car.getY()) == 2) {
-            score += 100;
-
-        }
+        
 
         if (gameState == GameState.Menu) {
-
+            
+            if(mainSound.donePlaying == true){
+                if(timeCount %60 == 1)
+                mainSound = new sound("assets/mainMenu.wav");
+            }
+            timeCount++;
         } else if (gameState == GameState.CarSelect) {
 
         } else if (gameState == GameState.Ingame) {
@@ -356,6 +363,13 @@ public class CarGame extends JFrame implements Runnable {
 
             if (timeCount % 5 == 1) {
                 score++;
+                
+                if (Obstacles.HitBox(car.getX(), car.getY()) == 2) {
+            
+             trashSound = new sound("assets/trashSound.wav");
+                score += 100;
+
+        }
         }
         else if(gameState == GameState.Over){
 
