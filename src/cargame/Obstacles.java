@@ -19,7 +19,7 @@ public class Obstacles {
     private boolean active;
     private int timecount;
     public static enum Type{
-        Tree,TrashCan,Car
+        Tree,TrashCan,Car,FinishLine
     };
     Obstacles(Image _image,Type _type){
         if(_type == Type.TrashCan){
@@ -147,6 +147,16 @@ public class Obstacles {
                   //obstacles.remove(this);   
                  
                 return 2;
+             }
+        }
+        else if(type == Type.FinishLine){
+             if( (carx + 30) > xpos-216 && (carx - 30) < xpos + 216  && (cary + 40) > ypos - 65 && (cary - 30) < ypos + 65 && active == true){
+                 
+                 System.out.println("die");
+                
+                  //obstacles.remove(this);   
+                 
+                return 4;
              }
         }
         

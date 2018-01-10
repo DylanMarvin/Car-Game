@@ -232,7 +232,7 @@ public class CarGame extends JFrame implements Runnable {
             g.setFont(customFont);
 
             g.setColor(Color.white);
-            //g.drawString(getScore(), Window.getX(1600), Window.getY(50));
+            g.drawString(getScore(), Window.getX(1600), Window.getY(50));
 
 
             g.drawString("Lives ", Window.getX(50), Window.getY(50));
@@ -378,6 +378,9 @@ public class CarGame extends JFrame implements Runnable {
                 trashSound = new sound("assets/trashSound.wav");
                 score += 100;
 
+            }
+            if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.FinishLine) == 4) {
+                gameOver = true;
             }
 
             timeCount++;
