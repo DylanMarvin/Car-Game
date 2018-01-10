@@ -206,7 +206,7 @@ public class CarGame extends JFrame implements Runnable {
         } else if (gameState == GameState.Ingame) {
             
             if(gameOver == true){
-                System.out.println(alpha);
+                
                 g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,(float) alpha));
             }
             
@@ -232,15 +232,8 @@ public class CarGame extends JFrame implements Runnable {
             g.setFont(customFont);
 
             g.setColor(Color.white);
-            if (score < 100) {
-                g.drawString("Score: 000" + score, Window.getX(1600), Window.getY(50));
-            } else if (score < 1000) {
-                g.drawString("Score: 00" + score, Window.getX(1600), Window.getY(50));
-            } else if (score < 10000) {
-                g.drawString("Score: 0" + score, Window.getX(1600), Window.getY(50));
-            } else if (score < 100000) {
-                g.drawString("Score " + score, Window.getX(1600), Window.getY(50));
-            }
+            g.drawString(getScore(), Window.getX(1600), Window.getY(50));
+
 
             g.drawString("Lives ", Window.getX(50), Window.getY(50));
             int count = 0;
@@ -252,16 +245,21 @@ public class CarGame extends JFrame implements Runnable {
             if(gameOver == true){
                 g.setComposite(AlphaComposite.SrcOver.derive(1f - (float) alpha));
 
+                //g.drawString(getScore(), Window.getX(1600), Window.getY(50));
                 HighScore.Draw(g,this);
+                
             }
             
         } else if (gameState == GameState.Over) {
             
              
             g.setFont(customFont);
-            g.setColor(Color.white);
+
             
             HighScore.Draw(g,this);
+            
+            g.setColor(Color.white);
+            g.drawString(getScore(), Window.getX(600), Window.getY(310));
         }
 
         gOld.drawImage(image, 0, 0, null);
@@ -317,10 +315,9 @@ public class CarGame extends JFrame implements Runnable {
             reset();
 
         }
-        if (Obstacles.HitBox(car.getX(), car.getY()) == 1) {
-            car.substractLife();
-            explosion = new sound("assets/Explosion3.wav");
-        }
+        
+
+        
         if (car.getLife() == 0) {
             gameOver = true;
         }
@@ -344,9 +341,9 @@ public class CarGame extends JFrame implements Runnable {
                 }
             }
             timeCount++;
-//          gameState = GameState.Over;
             return;
         }
+        
 
         
 
@@ -368,15 +365,22 @@ public class CarGame extends JFrame implements Runnable {
 
             spawner.tick();
 
-            if (timeCount % 5 == 1) {
+            if (timeCount % 5 == 1) 
                 score++;
                
-        if (Obstacles.HitBox(car.getX(), car.getY()) == 2) {
-            
-             trashSound = new sound("assets/trashSound.wav");
+            if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.Car) == 1) {
+                car.substractLife();
+                explosion = new sound("assets/Explosion3.wav");
+            }
+            else if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.TrashCan) == 2) {
+
+                trashSound = new sound("assets/trashSound.wav");
                 score += 100;
 
-        }
+            }
+
+
+            timeCount++;
         }
         else if(gameState == GameState.Over){
             if(HighScore.checkHighScore(score) > 0){
@@ -384,10 +388,7 @@ public class CarGame extends JFrame implements Runnable {
             }
                   
         }
-
-            timeCount++;
-
-        }
+        
 
     }
 
@@ -408,4 +409,17 @@ public class CarGame extends JFrame implements Runnable {
     }
 /////////////////////////////////////////////////////////////////////////
 
+    public String getScore(){
+        String _score = "Score: ";
+            if (score < 100) {
+                _score+="000" + score;
+            } else if (score < 1000) {
+                _score+="00" + score;
+            } else if (score < 10000) {
+                _score+="0" + score;
+            } else if (score < 100000) {
+                _score+="" + score;
+            }
+        return _score;
+    }
 }

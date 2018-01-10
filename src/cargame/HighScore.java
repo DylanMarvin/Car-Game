@@ -27,8 +27,7 @@ public class HighScore {
         g.drawImage(highscore,Window.getX(750),Window.getY(100),447,88,obj);
         
         for(int i = 7;i<12;i++){
-            g.drawLine(Window.getX(i*100), Window.getY(315), Window.getX((i*100)+60), Window.getY(315));
-            
+            g.drawLine(Window.getX(i*105), Window.getY(415), Window.getX((i*105)+60), Window.getY(415));           
         }
         
     }

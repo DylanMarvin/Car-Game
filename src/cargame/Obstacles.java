@@ -101,6 +101,7 @@ public class Obstacles {
         if(ypos >= Window.getHeight2()+50)
             obstacles.remove(this);
         return false;
+        
     }
         private void drawObstacle(Graphics2D g,double xpos,double ypos,double rot,double xscale,double yscale,CarGame obj)
     {
@@ -117,15 +118,18 @@ public class Obstacles {
         g.rotate(-rot  * Math.PI/180.0);
         g.translate(-xpos,-ypos);
     }
-    public static int HitBox(int x,int y){
+    public static int HitBox(int x,int y,Type _type){
         int loop = 0;
-        for(int i = 0;i<obstacles.size();i++){
-            loop = obstacles.get(i).hitBox(x,y);
+        for(Obstacles obj:obstacles){
+            if(obj.type == _type){
+                loop = obj.hitBox(x, y);
+            }
             
             if(loop > 0)
                 break;
         }
-        return(loop);
+        
+        return loop;
     }    
     
     public int hitBox(int carx,int cary){

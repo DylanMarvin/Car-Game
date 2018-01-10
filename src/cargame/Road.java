@@ -49,6 +49,9 @@ public class Road {
         if(roady >= -Window.getHeight2()*3){
             g.drawImage(roadImage,Window.getX(roadx),Window.getY(roady),Window.getWidth2(),Window.getHeight2(),obj);
         }
+           // g.setColor(Color.white);
+           // g.setFont(new Font("Arial", Font.PLAIN, 65));
+           // g.drawString("Road " + roadNum,Window.getX(300),Window.getY(roady+50));
     }
     public void tick(){
         roady+=10;
