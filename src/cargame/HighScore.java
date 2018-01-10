@@ -23,12 +23,22 @@ public class HighScore {
     
     public static void Draw(Graphics2D g, CarGame obj){
         g.drawImage(Menu.menuImage,Window.getX(0),Window.getY(0),Window.getWidth2(),Window.getHeight2(),obj);
-       
         g.drawImage(highscore,Window.getX(750),Window.getY(100),447,88,obj);
         
-        for(int i = 7;i<12;i++){
-            g.drawLine(Window.getX(i*105), Window.getY(415), Window.getX((i*105)+60), Window.getY(415));           
+        if(setHigh == false){
+            for(int i = 7;i<12;i++){
+                g.setColor(Color.white);
+                g.drawLine(Window.getX(i*105), Window.getY(415), Window.getX((i*105)+60), Window.getY(415));           
+            }
         }
+        else {
+            for(int i = 0;i<HighScores.length;i++){
+                //g.drawString(""+HighScores[i].name, Window.getX(i),Window.getY(i));
+                //g.drawString(""+HighScores[i].highScore,Window.getX(i),Window.getY(i));
+            }
+        }
+        
+        
         
     }
    

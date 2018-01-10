@@ -232,7 +232,7 @@ public class CarGame extends JFrame implements Runnable {
             g.setFont(customFont);
 
             g.setColor(Color.white);
-            g.drawString(getScore(), Window.getX(1600), Window.getY(50));
+            //g.drawString(getScore(), Window.getX(1600), Window.getY(50));
 
 
             g.drawString("Lives ", Window.getX(50), Window.getY(50));
@@ -245,8 +245,9 @@ public class CarGame extends JFrame implements Runnable {
             if(gameOver == true){
                 g.setComposite(AlphaComposite.SrcOver.derive(1f - (float) alpha));
 
-                //g.drawString(getScore(), Window.getX(1600), Window.getY(50));
+                
                 HighScore.Draw(g,this);
+                g.drawString(getScore(), Window.getX(860), Window.getY(310));
                 
             }
             
@@ -259,7 +260,7 @@ public class CarGame extends JFrame implements Runnable {
             HighScore.Draw(g,this);
             
             g.setColor(Color.white);
-            g.drawString(getScore(), Window.getX(600), Window.getY(310));
+            g.drawString(getScore(), Window.getX(860), Window.getY(310));
         }
 
         gOld.drawImage(image, 0, 0, null);
@@ -378,7 +379,6 @@ public class CarGame extends JFrame implements Runnable {
                 score += 100;
 
             }
-
 
             timeCount++;
         }
