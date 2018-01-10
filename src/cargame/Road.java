@@ -14,9 +14,13 @@ public class Road {
     int roadx;
     int roady;
     int roadNum;
+     
+ 
     private static int num;
     
     private static Image roadImage;
+    
+        private static Image finishLine;
     
     public static void Create(){
         for(int i = 0;i<50;i++){
@@ -33,6 +37,7 @@ public class Road {
     }
     public static void initImage(){
         roadImage = Toolkit.getDefaultToolkit().getImage("assets/road.png");
+        finishLine = Toolkit.getDefaultToolkit().getImage("assets/finish_line.png");
     }
     
     public static void Tick(){
@@ -48,7 +53,11 @@ public class Road {
     public void draw(Graphics2D g,CarGame obj){
         if(roady >= -Window.getHeight2()*3){
             g.drawImage(roadImage,Window.getX(roadx),Window.getY(roady),Window.getWidth2(),Window.getHeight2(),obj);
+            if(roadNum == 5){
+                g.drawImage(finishLine,316,Window.getY(roady),1314,150,obj);
+            }
         }
+        
            // g.setColor(Color.white);
            // g.setFont(new Font("Arial", Font.PLAIN, 65));
            // g.drawString("Road " + roadNum,Window.getX(300),Window.getY(roady+50));

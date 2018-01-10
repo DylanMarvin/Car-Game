@@ -378,6 +378,9 @@ public class CarGame extends JFrame implements Runnable {
                 score += 100;
 
             }
+            if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.FinishLine) == 4) {
+                gameOver = true;
+            }
 
 
             timeCount++;
