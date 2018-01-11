@@ -35,12 +35,16 @@ public class CarGame extends JFrame implements Runnable {
     Menu menu = new Menu();
     sound explosion;
     sound mainSound;
+    sound ingame;
     sound trashSound;
+    sound over;
     double alpha = 1.0f;  
     int timer;
     Image highScore;
     
     int soundTime;
+    boolean start;
+    boolean start2;
 
     String name;
     
@@ -298,6 +302,8 @@ public class CarGame extends JFrame implements Runnable {
         car = new Car(0);
         score = 0;
         soundTime = 0;
+        
+        start = true;
     }
     
     public void Reset(){
@@ -309,6 +315,7 @@ public class CarGame extends JFrame implements Runnable {
         Road.Reset();
         gameState = GameState.Menu;
         Obstacles.Reset();
+        start = true;
         
     }
 /////////////////////////////////////////////////////////////////////////
@@ -326,7 +333,7 @@ public class CarGame extends JFrame implements Runnable {
             Menu.initImages();
             Obstacles.initSprites();
             Road.initImage();
-            mainSound = new sound("assets/sound.wav");   
+            mainSound = new sound("assets/main.wav");   
             
             Fonts.addFont(new Fonts("8BitFont.TTF"));
             customFont = new Font("Perfect DOS VGA 437", Font.PLAIN, 40);
@@ -343,11 +350,29 @@ public class CarGame extends JFrame implements Runnable {
         }
         
         if(timeCount == 300)
-            mainSound.stopPlaying = true;
+//            mainSound.stopPlaying = true;
         
         if (gameOver) {
-            
-
+            ingame.stopPlaying = true;
+ if(start2 == true){
+            startPlaying2();
+            start2 = false;
+            }
+            if(over.donePlaying == true){               
+                
+                    System.out.println("sound is done");
+                    if (soundTime == 0)
+                        soundTime = 28;
+                    else
+                    {
+                        soundTime--;
+                        if (soundTime == 1)
+                        {
+                            over = new sound("assets/gameOver.wav");
+                            soundTime = 0;
+                        }
+                    }
+            }
             if (timeCount % 25 == 1) {
                 timer++;      
                 if(gameState != GameState.Over)
@@ -381,7 +406,7 @@ public class CarGame extends JFrame implements Runnable {
                         soundTime--;
                         if (soundTime == 1)
                         {
-                           // mainSound = new sound("assets/sound.wav");
+                            mainSound = new sound("assets/main.wav");
                             soundTime = 0;
                         }
                     }
@@ -390,6 +415,8 @@ public class CarGame extends JFrame implements Runnable {
         } else if (gameState == GameState.CarSelect) {
 
         } else if (gameState == GameState.Ingame) {
+            
+            
             Road.Tick();
 
             car.tick(mouseX, mouseY);
@@ -416,6 +443,26 @@ public class CarGame extends JFrame implements Runnable {
             }
 
             timeCount++;
+            mainSound.stopPlaying = true;
+            if(start == true){
+            startPlaying();
+            start = false;
+            }
+            if(ingame.donePlaying == true){               
+                
+                    System.out.println("sound is done");
+                    if (soundTime == 0)
+                        soundTime = 28;
+                    else
+                    {
+                        soundTime--;
+                        if (soundTime == 1)
+                        {
+                            ingame = new sound("assets/ingame.wav");
+                            soundTime = 0;
+                        }
+                    }
+            }
         }
         else if(gameState == GameState.Over){
             if(HighScore.checkHighScore(score) > 0){
@@ -423,8 +470,23 @@ public class CarGame extends JFrame implements Runnable {
             }
                   
         }
-        
+         
 
+    }
+    ////////////////////////////////////////////////////////////////////////
+    public void startPlaying(){
+        if(start == true){
+
+            ingame = new sound("assets/ingame.wav");
+          
+        }
+    }
+     public void startPlaying2(){
+        if(start == true){
+
+            ingame = new sound("assets/gameOver.wav");
+          
+        }
     }
 
 ////////////////////////////////////////////////////////////////////////////

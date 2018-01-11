@@ -150,7 +150,11 @@ public class Obstacles {
              }
         }
         else if(type == Type.FinishLine){
-             if( (carx + 30) > xpos-216 && (carx - 30) < xpos + 216  && (cary + 40) > ypos - 65 && (cary - 30) < ypos + 65){
+
+           
+
+             if( (carx + 30) > xpos && (carx - 30) < (xpos+216)  && (cary + 40) > ypos - 65 && (cary - 30) < ypos + 65 && active == true){
+
                  
                  System.out.println("die");
                 

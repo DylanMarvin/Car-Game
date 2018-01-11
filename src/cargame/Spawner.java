@@ -8,11 +8,17 @@ public class Spawner {
     private int distance;
     private int level = 1;
     
+   
+    
+    private int soundTime;
+    
     Spawner(){
         scoreKeep = 0;
         timeKeep = 0;
         distance = 0;
         level = 1;
+        
+      
     }
     
     public void Reset(){
@@ -20,20 +26,27 @@ public class Spawner {
         timeKeep = 0;
         distance = 0;
         level = 1;
+       
     }
     
     public void tick(){
+        
         if(timeKeep % 5 == 1){
                 scoreKeep++;
             }
-        
+         
         if(timeKeep % 250 == 1){
             Obstacles.Create(0, Obstacles.Type.TrashCan);
         }
         
         if(level == 1){
+            
+            
+            
             if(timeKeep % 100 == 1){              
                 Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
+                 
+                
             }
         }
         else if(level == 2){
@@ -64,7 +77,9 @@ public class Spawner {
             level = 4;
         }
         
+        soundTime++;
         timeKeep++;
     }
+    
 
 }
