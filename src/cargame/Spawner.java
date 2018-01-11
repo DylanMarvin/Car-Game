@@ -8,6 +8,11 @@ public class Spawner {
     private int distance;
     private int level = 1;
     
+    private Diffuculty normal;
+    private Diffuculty demo;
+    
+    public boolean gameStuff;
+    
    
     
     private int soundTime;
@@ -17,7 +22,8 @@ public class Spawner {
         timeKeep = 0;
         distance = 0;
         level = 1;
-        
+        gameStuff = false;
+      
       
     }
     
@@ -26,11 +32,14 @@ public class Spawner {
         timeKeep = 0;
         distance = 0;
         level = 1;
-       
+       gameStuff = false;
     }
     
     public void tick(){
         
+        
+        if(!gameStuff){
+            
         if(timeKeep % 5 == 1){
                 scoreKeep++;
             }
@@ -66,6 +75,7 @@ public class Spawner {
         else if(level == 4){
             
         }
+        }
         
         if(scoreKeep == 250){
             level = 2;
@@ -77,8 +87,12 @@ public class Spawner {
             level = 4;
         }
         
+        
         soundTime++;
         timeKeep++;
+    }
+    public void ChangeGame(){
+        gameStuff = true;
     }
     
 

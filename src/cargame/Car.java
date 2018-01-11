@@ -25,7 +25,7 @@ public class Car {
         carY = 870;
         carImage = carSprites[i];
         carNum = i;
-        life = 3;
+        life = 1;
 
     }
     public static void initSprites(){

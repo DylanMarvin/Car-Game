@@ -53,6 +53,7 @@ public class Road {
     public void draw(Graphics2D g,CarGame obj){
         if(roady >= -Window.getHeight2()*3){
             g.drawImage(roadImage,Window.getX(roadx),Window.getY(roady),Window.getWidth2(),Window.getHeight2(),obj);
+            
 
         }
         
