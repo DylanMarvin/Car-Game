@@ -40,7 +40,7 @@ public class CarGame extends JFrame implements Runnable {
     int timer;
     Image highScore;
     
-    
+    int soundTime;
 
     String name;
     
@@ -58,7 +58,7 @@ public class CarGame extends JFrame implements Runnable {
         frame.setVisible(true);
         frame.setTitle("Car Game");
         frame.setLocationRelativeTo(null);
-        frame.setExtendedState(MAXIMIZED_BOTH);
+        //frame.setExtendedState(MAXIMIZED_BOTH);
         frame.setResizable(true);
 
     }
@@ -85,9 +85,14 @@ public class CarGame extends JFrame implements Runnable {
                             menu.addCarNum();
                         } else if (xpos >= 761 && xpos <= 1152 && ypos >= 851 && ypos <= 924) {
                             gameState = GameState.Ingame;
-                            car = new Car(menu.getCarNum());
+                            car = new Car(menu.getCarNum());  
                         }
-                    } else if (gameState == GameState.Ingame) {
+                    }//else if(gameState == GameState.DiffucultySel){
+                        
+                        //if
+                        
+                 //   }
+                else if (gameState == GameState.Ingame) {
 
                     } else if(gameState == GameState.Over){
                         //if(xpos ){
@@ -99,7 +104,7 @@ public class CarGame extends JFrame implements Runnable {
                 }
 
                 if (e.BUTTON3 == e.getButton()) {
-                    reset();
+                    Reset();
                 }
 
                 repaint();
@@ -292,6 +297,19 @@ public class CarGame extends JFrame implements Runnable {
 
         car = new Car(0);
         score = 0;
+        soundTime = 0;
+    }
+    
+    public void Reset(){
+        timeCount = 0;
+        timer = 0;
+        score = 0;
+        menu.Reset();
+        spawner.Reset();
+        Road.Reset();
+        gameState = GameState.Menu;
+        Obstacles.Reset();
+        
     }
 /////////////////////////////////////////////////////////////////////////
 
@@ -302,13 +320,14 @@ public class CarGame extends JFrame implements Runnable {
             if (Window.xsize != getSize().width || Window.ysize != getSize().height) {
                 Window.xsize = getSize().width;
                 Window.ysize = getSize().height;
-                 mainSound = new sound("assets/mainMenu.wav");
+                
             }
             Car.initSprites();
             Menu.initImages();
             Obstacles.initSprites();
             Road.initImage();
-
+            mainSound = new sound("assets/sound.wav");   
+            
             Fonts.addFont(new Fonts("8BitFont.TTF"));
             customFont = new Font("Perfect DOS VGA 437", Font.PLAIN, 40);
             
@@ -323,6 +342,8 @@ public class CarGame extends JFrame implements Runnable {
             gameOver = true;
         }
         
+        if(timeCount == 300)
+            mainSound.stopPlaying = true;
         
         if (gameOver) {
             
@@ -350,11 +371,22 @@ public class CarGame extends JFrame implements Runnable {
 
         if (gameState == GameState.Menu) {
             
-            if(mainSound.donePlaying == true){
-                if(timeCount %60 == 1)
-                mainSound = new sound("assets/mainMenu.wav");
+            if(mainSound.donePlaying == true){               
+                
+                    System.out.println("sound is done");
+                    if (soundTime == 0)
+                        soundTime = 28;
+                    else
+                    {
+                        soundTime--;
+                        if (soundTime == 1)
+                        {
+                           // mainSound = new sound("assets/sound.wav");
+                            soundTime = 0;
+                        }
+                    }
             }
-            timeCount++;
+            
         } else if (gameState == GameState.CarSelect) {
 
         } else if (gameState == GameState.Ingame) {

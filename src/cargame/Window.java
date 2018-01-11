@@ -11,8 +11,10 @@ class Window {
     
     static final int YTITLE = 30; //30
 //    static final int WINDOW_BORDER = 0; //8
-    static final int WINDOW_WIDTH = 1920;
-    static final int WINDOW_HEIGHT = 10;
+//    static final int WINDOW_WIDTH = 1920;
+    static final int WINDOW_WIDTH = 920;
+//    static final int WINDOW_HEIGHT = 10;
+    static final int WINDOW_HEIGHT = 610;
     
         
     static int xsize = -1;

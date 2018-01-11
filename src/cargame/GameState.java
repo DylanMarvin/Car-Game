@@ -3,5 +3,5 @@ package cargame;
 
 
 public enum GameState {
-    Menu,CarSelect,Ingame,Over,Paused
+    Menu,CarSelect,DiffucultySel,Ingame,Over
 }

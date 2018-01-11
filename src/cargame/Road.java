@@ -23,7 +23,7 @@ public class Road {
         private static Image finishLine;
     
     public static void Create(){
-        for(int i = 0;i<50;i++){
+        for(int i = 0;i<80;i++){
             Road obj = new Road(0, (-Window.getHeight2()) *i);
             roads.add(obj);
         }
@@ -53,9 +53,7 @@ public class Road {
     public void draw(Graphics2D g,CarGame obj){
         if(roady >= -Window.getHeight2()*3){
             g.drawImage(roadImage,Window.getX(roadx),Window.getY(roady),Window.getWidth2(),Window.getHeight2(),obj);
-            if(roadNum == 5){
-                g.drawImage(finishLine,316,Window.getY(roady),1314,150,obj);
-            }
+
         }
         
            // g.setColor(Color.white);
@@ -70,6 +68,20 @@ public class Road {
 
         }
 
+    }
+    
+    public static void Reset(){
+        roads.removeAll(roads);
+        Road.Create();
+    }
+    
+    public static int getRoadNum(){
+        for(int i = 0;i<roads.size();i++){
+            if(roads.get(i).roadNum == 5){
+                return roads.get(i).roadNum;
+            }
+        }
+        return -1;
     }
     
 

@@ -150,7 +150,7 @@ public class Obstacles {
              }
         }
         else if(type == Type.FinishLine){
-             if( (carx + 30) > xpos-216 && (carx - 30) < xpos + 216  && (cary + 40) > ypos - 65 && (cary - 30) < ypos + 65 && active == true){
+             if( (carx + 30) > xpos-216 && (carx - 30) < xpos + 216  && (cary + 40) > ypos - 65 && (cary - 30) < ypos + 65){
                  
                  System.out.println("die");
                 
@@ -161,5 +161,10 @@ public class Obstacles {
         }
         
         return 0;
+    }
+    
+    public static void Reset(){
+        obstacles.removeAll(obstacles);
+        
     }
 }

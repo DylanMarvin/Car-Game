@@ -13,6 +13,7 @@ class sound implements Runnable {
     Thread myThread;
     File soundFile;
     public boolean donePlaying = false;
+    public boolean stopPlaying = false;
     sound(String _name)
     {
         soundFile = new File(_name);
@@ -31,13 +32,14 @@ class sound implements Runnable {
         source.start();
         int read = 0;
         byte[] audioData = new byte[16384];
-        while (read > -1){
+        while (read > -1 && !stopPlaying){
             read = ais.read(audioData,0,audioData.length);
             if (read >= 0) {
                 source.write(audioData,0,read);
             }
         }
         donePlaying = true;
+        stopPlaying = false;
  
         source.drain();
         source.close();

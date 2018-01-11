@@ -99,6 +99,7 @@ public class Car {
         }
         
     }
+
     
     public void mov(double mouseX,double mouseY){
         int dist = (int)Math.hypot((mouseX-carX), (mouseY-carY));

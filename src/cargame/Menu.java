@@ -65,6 +65,12 @@ public class Menu {
         }
 
     }
+    public void Reset(){
+        pressPlay = false;
+        pressQuit = false;
+        color1 = Color.BLACK;
+        color2 = Color.BLACK;
+    }
     
     public boolean getpressPlay(){
         return pressPlay;
