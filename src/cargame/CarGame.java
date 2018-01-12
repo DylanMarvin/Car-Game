@@ -28,6 +28,7 @@ public class CarGame extends JFrame implements Runnable {
     Graphics2D g;
 
     GameState gameState = GameState.Menu;
+    Difficulty difficulty;
     Spawner spawner;
     Car car;
     int score;
@@ -41,14 +42,20 @@ public class CarGame extends JFrame implements Runnable {
     double alpha = 1.0f;  
     int timer;
     Image highScore;
+    int scoreKeep;
+    
+    int timer2;
     
     int soundTime;
     boolean start;
     boolean start2;
+    
+    boolean finishLine;
+    boolean play;
 
     String name;
     
-    Diffuculty mode;
+    Difficulty mode;
     
     int mouseX;
     int mouseY;
@@ -64,7 +71,7 @@ public class CarGame extends JFrame implements Runnable {
         frame.setVisible(true);
         frame.setTitle("Car Game");
         frame.setLocationRelativeTo(null);
-        //frame.setExtendedState(MAXIMIZED_BOTH);
+        frame.setExtendedState(MAXIMIZED_BOTH);
         frame.setResizable(true);
 
     }
@@ -75,11 +82,12 @@ public class CarGame extends JFrame implements Runnable {
                 int xpos = e.getX();
                 int ypos = e.getY();
 
-                System.out.println("Xpos:" + xpos + " Ypos:" + ypos);
+//                System.out.println("Xpos:" + xpos + " Ypos:" + ypos);
 
                 if (e.BUTTON1 == e.getButton()) {
                     if (gameState == GameState.Menu) {
                         if (menu.getpressPlay()) {
+                            System.out.println("CarSelect");
                             gameState = GameState.CarSelect;
                         } else if (menu.getpressQuit()) {
                             System.exit(0);
@@ -91,6 +99,8 @@ public class CarGame extends JFrame implements Runnable {
                             menu.addCarNum();
                         } else if (xpos >= 761 && xpos <= 1152 && ypos >= 851 && ypos <= 924) {
                             gameState = GameState.Ingame;
+                                                        System.out.println("InGame");
+
                             car = new Car(menu.getCarNum());  
                         }
                     }//else if(gameState == GameState.DiffucultySel){
@@ -222,7 +232,9 @@ public class CarGame extends JFrame implements Runnable {
             }
             
             Road.Draw(g, this);
-
+            
+            Obstacles.Draw(g, this);
+            
             if (gameOver != true) {
                 car.draw(g, this); 
                 
@@ -238,7 +250,7 @@ public class CarGame extends JFrame implements Runnable {
                     g.drawImage(menu.getExplosion(), Window.getX(car.getX() - 53), Window.getY(car.getY() - 43), 100, 100, this);
                 }
             }
-            Obstacles.Draw(g, this);
+            
 
             g.setFont(customFont);
 
@@ -295,7 +307,8 @@ public class CarGame extends JFrame implements Runnable {
 /////////////////////////////////////////////////////////////////////////
     public void reset() {
         timeCount = 0;
-
+        start2 = true;
+        
         timer = 0;
 
         menu = new Menu();
@@ -304,7 +317,15 @@ public class CarGame extends JFrame implements Runnable {
         car = new Car(0);
         score = 0;
         soundTime = 0;
-        mode = Diffuculty.Demo;
+
+        scoreKeep = 0;
+        difficulty = Difficulty.Demo;
+        
+        timer2 = 0;
+        play = true;
+        finishLine = true;
+        
+
         start = true;
     }
     
@@ -312,13 +333,17 @@ public class CarGame extends JFrame implements Runnable {
         timeCount = 0;
         timer = 0;
         score = 0;
+        timer2 = 0;
         menu.Reset();
         spawner.Reset();
         Road.Reset();
         gameState = GameState.Menu;
+        gameOver = false;
         Obstacles.Reset();
+        scoreKeep = 0;
+        play = true;
         start = true;
-        mode = Diffuculty.Demo;
+        mode = Difficulty.Demo;
         
     }
 /////////////////////////////////////////////////////////////////////////
@@ -348,15 +373,33 @@ public class CarGame extends JFrame implements Runnable {
         
 
         
-        if (car.getLife() == 0) {
+        if (car.getLife() <= 0) {
             gameOver = true;
         }
-     
-            
-//            mainSound.stopPlaying = true;
-        
+
         if (gameOver) {
-  
+
+            ingame.stopPlaying = true;
+        if(start2 == true){
+            startPlaying2();
+            start2 = false;
+            }
+            if(over.donePlaying == true){               
+                
+ //                   System.out.println("sound is done");
+                    if (soundTime == 0)
+                        soundTime = 28;
+                    else
+                    {
+                        soundTime--;
+                        if (soundTime == 1)
+                        {
+                            over = new sound("assets/gameOver.wav");
+                            soundTime = 0;
+                        }
+                    }
+            }
+
             if (timeCount % 25 == 1) {
                 timer++;      
                 
@@ -366,7 +409,7 @@ public class CarGame extends JFrame implements Runnable {
                     alpha -= 0.1;
                 else{
                     gameState = GameState.Over;
-                    System.out.println(gameState);
+  //                  System.out.println(gameState);
                      
                 }
                 if (timer == 5) {
@@ -384,7 +427,7 @@ public class CarGame extends JFrame implements Runnable {
             
             if(mainSound.donePlaying == true){               
                 
-                    System.out.println("sound is done");
+ //                   System.out.println("sound is done");
                     if (soundTime == 0)
                         soundTime = 28;
                     else
@@ -401,44 +444,77 @@ public class CarGame extends JFrame implements Runnable {
         } else if (gameState == GameState.CarSelect) {
 
         } else if (gameState == GameState.Ingame) {
-            
-            
-            Road.Tick();
+            if(gameOver == false){
+                if(difficulty == Difficulty.Demo){
+                    if(scoreKeep == 750){
+                        play = false;
+                    }
+                    if(finishLine == true){
+                        Obstacles.Create(0, Obstacles.Type.FinishLine);
+                        finishLine = false;
+                    }
+                    car.tick(mouseX, mouseY, play);
+                    Obstacles.Tick(play);
+                    if(play == true){
+                        Road.Tick();
 
-            car.tick(mouseX, mouseY);
+                        spawner.tick();
 
-            Obstacles.Tick();
+                        if (timeCount % 5 == 1) 
+                            scoreKeep++;
 
-            spawner.tick();
+                        if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.Car) == 1) {
+                            car.substractLife();
+                            explosion = new sound("assets/Explosion3.wav");
+                        }
+                        else if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.TrashCan) == 2) {
 
-            if (timeCount % 5 == 1) 
-                score++;
-               
-            
-            
-            if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.Car) == 1) {
-                car.substractLife();
-                explosion = new sound("assets/Explosion3.wav");
+                            trashSound = new sound("assets/trashSound.wav");
+                            score += 100;
+
+                        }
+                        if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.FinishLine) == 4) {
+                            gameOver = true;
+                        }
+                    }
+                }
+                else if(difficulty == Difficulty.Normal){
+                        car.tick(mouseX, mouseY, play);
+                        Obstacles.Tick(play);
+
+                        Road.Tick();
+                        spawner.tick();
+
+
+                        if (timeCount % 5 == 1) 
+                            scoreKeep++;
+
+                        if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.Car) == 1) {
+                            car.substractLife();
+                            explosion = new sound("assets/Explosion3.wav");
+                        }
+                        else if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.TrashCan) == 2) {
+
+                            trashSound = new sound("assets/trashSound.wav");
+                            score += 100;
+
+                        }
+                        if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.FinishLine) == 4) {
+                            gameOver = true;
+                        }
+                }
             }
-            else if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.TrashCan) == 2) {
-
-                trashSound = new sound("assets/trashSound.wav");
-                score += 100;
-
-            }
-            if (Obstacles.HitBox(car.getX(), car.getY(),Obstacles.Type.FinishLine) == 4) {
-                gameOver = true;
-            }
-
             timeCount++;
+            
             mainSound.stopPlaying = true;
             if(start == true){
             startPlaying();
             start = false;
+            
             }
             if(ingame.donePlaying == true){               
                 
-                    System.out.println("sound is done");
+  //                  System.out.println("sound is done");
                     if (soundTime == 0)
                         soundTime = 28;
                     else
@@ -453,35 +529,11 @@ public class CarGame extends JFrame implements Runnable {
             }
         }
         else if(gameState == GameState.Over){
-             System.out.println("sound is done");
 
-                HighScore.setNewHigh(name, score, HighScore.checkHighScore(score));
-                
-                    ingame.stopPlaying = true;
-            
-        if(start2 == true){
-            startPlaying2();
-            start2 = false;
-            }
-        System.out.println("yeeyt");
-            HighScore.setHighScore(score);
-            if(over.donePlaying == true){               
-                
-                    System.out.println("sound is done");
-                    if (soundTime == 0)
-                        soundTime = 28;
-                    else
-                    {
-                        soundTime--;
-                        if (soundTime == 1)
-                        {
-                            over = new sound("assets/gameOver.wav");
-                            soundTime = 0;
-                        }
-                    }
-            }
-              System.out.print("hlelo");
-          
+
+                HighScore.setHighScore(score);
+                                   
+
                   
         }
          
@@ -490,16 +542,12 @@ public class CarGame extends JFrame implements Runnable {
     ////////////////////////////////////////////////////////////////////////
     public void startPlaying(){
         if(start == true){
-
-            ingame = new sound("assets/ingame.wav");
-          
+            ingame = new sound("assets/ingame.wav"); 
         }
     }
      public void startPlaying2(){
         if(start2 == true){
-
             over = new sound("assets/gameOver.wav");
-          
         }
     }
 
@@ -522,14 +570,14 @@ public class CarGame extends JFrame implements Runnable {
 
     public String getScore(){
         String _score = "Score: ";
-            if (score < 100) {
-                _score+="000" + score;
-            } else if (score < 1000) {
-                _score+="00" + score;
-            } else if (score < 10000) {
-                _score+="0" + score;
-            } else if (score < 100000) {
-                _score+="" + score;
+            if (score+ scoreKeep < 100) {
+                _score+="000" + (score + scoreKeep);
+            } else if (score+ scoreKeep < 1000) {
+                _score+="00" + (score + scoreKeep);
+            } else if (score+ scoreKeep < 10000) {
+                _score+="0" + (score + scoreKeep);
+            } else if (score+ scoreKeep < 100000) {
+                _score+="" + (score + scoreKeep);
             }
         return _score;
     }

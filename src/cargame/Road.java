@@ -77,12 +77,7 @@ public class Road {
     }
     
     public static int getRoadNum(){
-        for(int i = 0;i<roads.size();i++){
-            if(roads.get(i).roadNum == 5){
-                return roads.get(i).roadNum;
-            }
-        }
-        return -1;
+        return roads.get(36).roady;
     }
     
 

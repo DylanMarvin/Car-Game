@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Obstacles {
     private static ArrayList<Obstacles> obstacles = new ArrayList<Obstacles>();
     private static Image sprites[] = new Image[4];
+    private static Image finishLine;
     private static Image onehundred;
     private int xpos;
     private int ypos;
@@ -22,39 +23,52 @@ public class Obstacles {
         Tree,TrashCan,Car,FinishLine
     };
     Obstacles(Image _image,Type _type){
-        if(_type == Type.TrashCan){
-            if((int) (Math.random()*2+1) == 1){
-                xpos = (int) (Math.random()*60+320);
-            }
-            else{
-                xpos = (int) (Math.random()*60+1550);
-            }
-            angle = 0;
-            scale = 3;
-            
-        }
-        else if(_type == Type.Tree){
-            if((int) (Math.random()*2+1) == 1){
-                xpos = (int) (Math.random()*60+320);
-                angle = 90;
-            }
-            else{
-                xpos = (int) (Math.random()*60+1650);
-                angle = -90;
-            }
-            
-            scale = 1;
-         }
-        else{
-            xpos = (int) (Math.random()*1060+440);
-            angle = 180;
-            scale = 2;
-        }
         
-        ypos = -50;
-        type = _type;
-        image = _image;
-        active = true;
+        if(_type != Type.FinishLine){            
+            if(_type == Type.TrashCan){
+                if((int) (Math.random()*2+1) == 1){
+                    xpos = (int) (Math.random()*60+320);
+                }
+                else{
+                    xpos = (int) (Math.random()*60+1550);
+                }
+                angle = 0;
+                scale = 3;
+
+            }
+            else if(_type == Type.Tree){
+                if((int) (Math.random()*2+1) == 1){
+                    xpos = (int) (Math.random()*60+320);
+                    angle = 90;
+                }
+                else{
+                    xpos = (int) (Math.random()*60+1650);
+                    angle = -90;
+                }
+
+                scale = 1;
+             }
+            else{
+                xpos = (int) (Math.random()*1060+440);
+                angle = 180;
+                scale = 2;
+            }
+
+
+            ypos = -50;
+            type = _type;
+            image = _image;
+            active = true;
+        }
+        else{
+            ypos = Road.getRoadNum();
+            xpos = 315;
+            type = _type;
+            image = null;
+            active = true;
+            scale = 1;
+            angle = 0;
+        }
         
     }
     public static void Draw(Graphics2D g,CarGame obj){
@@ -63,9 +77,9 @@ public class Obstacles {
         }
     }
     
-    public static void Tick(){
+    public static void Tick(boolean play){
        for(int i =0;i<obstacles.size();i++){
-            obstacles.get(i).tick();
+            obstacles.get(i).tick(play);
             
         }
     }
@@ -82,25 +96,37 @@ public class Obstacles {
         sprites[2] = Toolkit.getDefaultToolkit().createImage("assets/truck.png");
         sprites[3] = Toolkit.getDefaultToolkit().createImage("assets/greenCar.png");
         onehundred = Toolkit.getDefaultToolkit().createImage("assets/100.png");
+        finishLine = Toolkit.getDefaultToolkit().createImage("assets/finishLine.png");
         
     }
     
     public void draw(Graphics2D g,CarGame obj){
-        if(active == true)
-        drawObstacle(g,Window.getX(xpos),Window.getY(ypos),angle,scale,scale,obj);
-        else if(active == false){
-            g.drawImage(onehundred,Window.getX(xpos),Window.getY(ypos),216,65,obj);
+        if(type != Type.FinishLine){
+            if(active == true)
+                drawObstacle(g,Window.getX(xpos),Window.getY(ypos),angle,scale,scale,obj);
+            else if(active == false){
+                g.drawImage(onehundred,Window.getX(xpos),Window.getY(ypos),216,65,obj);
+            }
+        }
+        
+        if(type == Type.FinishLine){
+            g.drawImage(finishLine,Window.getX(xpos),Window.getY(ypos),1315,247,obj);
         }
     }
     
-    public boolean tick(){
-        
-        ypos += 15;
-        
+    public void tick(boolean play){
+        if(type != Type.FinishLine){
+            ypos += 15;
+
+
+            if(ypos >= Window.getHeight2()+50)
+                obstacles.remove(this);
+        }
+        else{
+            if(play == true)
+                ypos += 10;
             
-        if(ypos >= Window.getHeight2()+50)
-            obstacles.remove(this);
-        return false;
+        }
         
     }
         private void drawObstacle(Graphics2D g,double xpos,double ypos,double rot,double xscale,double yscale,CarGame obj)
@@ -155,11 +181,6 @@ public class Obstacles {
 
              if( (carx + 30) > xpos && (carx - 30) < (xpos+216)  && (cary + 40) > ypos - 65 && (cary - 30) < ypos + 65 && active == true){
 
-                 
-                 System.out.println("die");
-                
-                  //obstacles.remove(this);   
-                 
                 return 4;
              }
         }

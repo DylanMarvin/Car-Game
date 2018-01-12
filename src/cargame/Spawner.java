@@ -8,8 +8,8 @@ public class Spawner {
     private int distance;
     private int level = 1;
     
-    private Diffuculty normal;
-    private Diffuculty demo;
+    private Difficulty normal;
+    private Difficulty demo;
     
     public boolean gameStuff;
     

@@ -2,6 +2,6 @@
 package cargame;
 
 
-public enum Diffuculty {
+public enum Difficulty {
     Demo,Normal
 }

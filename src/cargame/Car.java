@@ -18,6 +18,8 @@ public class Car {
     double xMov;
     double yMov;
     
+    boolean canHit;
+    
     int life;
     
     Car(int i){
@@ -26,6 +28,7 @@ public class Car {
         carImage = carSprites[i];
         carNum = i;
         life = 1;
+        canHit = true;
 
     }
     public static void initSprites(){
@@ -44,14 +47,22 @@ public class Car {
             drawCar(g,Window.getX(carX),Window.getY(carY),angle,3,3,obj);
         
     }
-    public void tick(int mouseX,int mouseY){
+    public void tick(int mouseX,int mouseY, boolean play){
+        if(play == true)
         calcAngle(mouseX, mouseY);
         
-        if( (carX + xMov) > 1600){
+        if( (carX + xMov) > 1600 && canHit == true){
              carX = 1600;
+             life--;
+             canHit = false;
         }
-        else if((carX + xMov) < 350){
+        else if((carX + xMov) < 350 && canHit == true){
             carX = 350;
+            life--;
+            canHit = false;
+        }
+        else if(canHit != true){
+            canHit = true;
         }
             
         if(angle >= 90){
@@ -60,11 +71,15 @@ public class Car {
         else if(angle < -90){
             angle = -90;
         }
-        
-        if(moveValid(carX,carY,mouseX,mouseY,30)){
-            carX += xMov;                  
+        if(play == true){
+            if(moveValid(carX,carY,mouseX,mouseY,30)){
+                carX += xMov;                  
+            }
         }
-        
+        else if(play == false){
+            carY-=20;
+            angle = 0;
+        }
         
         
     }
