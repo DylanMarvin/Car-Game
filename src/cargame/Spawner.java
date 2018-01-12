@@ -13,8 +13,6 @@ public class Spawner {
     
     public boolean gameStuff;
     
-   
-    
     private int soundTime;
     
     Spawner(){
@@ -32,49 +30,49 @@ public class Spawner {
         timeKeep = 0;
         distance = 0;
         level = 1;
-       gameStuff = false;
+        gameStuff = false;
     }
     
     public void tick(){
         
         
         if(!gameStuff){
-            
-        if(timeKeep % 5 == 1){
-                scoreKeep++;
-            }
-         
-        if(timeKeep % 250 == 1){
-            Obstacles.Create(0, Obstacles.Type.TrashCan);
-        }
-        
-        if(level == 1){
-            
-            
-            
-            if(timeKeep % 100 == 1){              
-                Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
-                 
-                
-            }
-        }
-        else if(level == 2){
-            if(timeKeep % 75 == 1){              
-                Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
-            }
-        }
-        else if(level == 3){
-            if(timeKeep % 50 == 1){              
-                Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
-            }
-            if(timeKeep % 40 == 1){              
-                Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
-            }
-        }
 
-        else if(level == 4){
-            
-        }
+            if(timeKeep % 5 == 1){
+                    scoreKeep++;
+                }
+
+            if(timeKeep % 250 == 1){
+                Obstacles.Create(0, Obstacles.Type.TrashCan);
+            }
+
+            if(level == 1){
+
+
+
+                if(timeKeep % 100 == 1){              
+                    Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
+
+
+                }
+            }
+            else if(level == 2){
+                if(timeKeep % 75 == 1){              
+                    Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
+                }
+            }
+            else if(level == 3){
+                if(timeKeep % 50 == 1){              
+                    Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
+                }
+                if(timeKeep % 40 == 1){              
+                    Obstacles.Create((int) (Math.random()*3+1), Obstacles.Type.Car);
+                }
+            }
+
+            else if(level == 4){
+
+            }
         }
         
         if(scoreKeep == 250){

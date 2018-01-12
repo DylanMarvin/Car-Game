@@ -189,7 +189,7 @@ public class Obstacles {
     }
     
     public static void Reset(){
-        obstacles.removeAll(obstacles);
+        obstacles.clear();
         
     }
 }

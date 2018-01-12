@@ -25,6 +25,18 @@ public class Menu {
     Color color1;
     Color color2;
     
+    static Image demo;
+    static Image selDifficulty;
+    static Image normal;
+    
+
+    boolean pressDemo;
+    boolean pressNormal;
+    
+
+    Color color3;
+    Color color4;
+    
     static int carNum;
     
     public static void initImages(){
@@ -38,6 +50,9 @@ public class Menu {
         rArrow = Toolkit.getDefaultToolkit().getImage("assets/rArrow.png");
         lArrow = Toolkit.getDefaultToolkit().getImage("assets/lArrow.png");
         Continue = Toolkit.getDefaultToolkit().getImage("assets/continue.png");
+        demo = Toolkit.getDefaultToolkit().getImage("assets/Demo.png");
+        selDifficulty = Toolkit.getDefaultToolkit().getImage("assets/selDifficulty.png");
+        normal = Toolkit.getDefaultToolkit().getImage("assets/Normal.png");
         
         carNum = 0;
     }
@@ -62,6 +77,21 @@ public class Menu {
             g.drawImage(Continue,Window.getX(765),Window.getY(820),390,73,obj);
             
             g.drawImage(Car.getSprite(carNum),Window.getX(850),Window.getY(400),220,280,obj);
+        } else if(gameState == GameState.DifficultySel){
+            g.drawImage(menuImage,Window.getX(0),Window.getY(0),Window.getWidth2(),Window.getHeight2(),obj);
+            
+            g.drawImage(selDifficulty,Window.getX(600),Window.getY(120),764,88,obj);
+            
+            g.setColor(color3);
+            g.fillRoundRect(Window.getX(695), Window.getY(395),235, 80,10,10);
+            g.setColor(color4);
+            g.fillRoundRect(Window.getX(995), Window.getY(395),235, 80,10,10);
+            
+            g.drawImage(demo,Window.getX(700),Window.getY(400),225,65,obj);
+            g.drawImage(normal,Window.getX(1000),Window.getY(400),225,65,obj);
+            
+
+            
         }
 
     }
@@ -70,6 +100,12 @@ public class Menu {
         pressQuit = false;
         color1 = Color.BLACK;
         color2 = Color.BLACK;
+        
+        pressDemo = false;
+        pressNormal = false;
+
+        color3 = Color.BLACK;
+        color4 = Color.BLACK;
     }
     
     public boolean getpressPlay(){
@@ -122,5 +158,30 @@ public class Menu {
     public int getCarNum(){
         return carNum;
     }
+        public boolean getpressDemo(){
+        return pressDemo;
+    }
+    public boolean getpressNormal(){
+        return pressNormal;
+    }
+     public void setpressDemo(boolean yes){
+         pressDemo = yes;
+    }
+    public void setpressNormal(boolean no){
+         pressNormal = no;
+    }
+    public Color getColor3(){
+        return color3;
+    }
+    public Color getColor4(){
+        return color4;
+    }
+     public void setColor3(Color color){
+         color3 = color;
+    }
+    public void setColor4(Color color){
+         color4 = color;
+    }
+
    
 }

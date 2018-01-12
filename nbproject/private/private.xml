@@ -3,27 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< Updated upstream
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/Spawner.java</file>
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/HighScore.java</file>
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/GameState.java</file>
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/Window.java</file>
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/CarGame.java</file>
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/Road.java</file>
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/Obstacles.java</file>
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/Diffuculty.java</file>
-            <file>file:/C:/Users/146004265/Desktop/Cargame/Car-Game/src/cargame/Car.java</file>
-=======
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/Diffuculty.java</file>
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/GameState.java</file>
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/Obstacles.java</file>
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/sound.java</file>
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/Window.java</file>
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/CarGame.java</file>
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/Road.java</file>
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/Spawner.java</file>
-            <file>file:/C:/Users/150003044/Desktop/Car-Game/src/cargame/Car.java</file>
->>>>>>> Stashed changes
+            <file>file:/C:/Users/Dylan/Desktop/Car-Game/src/cargame/Menu.java</file>
+            <file>file:/C:/Users/Dylan/Desktop/Car-Game/src/cargame/Road.java</file>
+            <file>file:/C:/Users/Dylan/Desktop/Car-Game/src/cargame/Obstacles.java</file>
+            <file>file:/C:/Users/Dylan/Desktop/Car-Game/src/cargame/Car.java</file>
+            <file>file:/C:/Users/Dylan/Desktop/Car-Game/src/cargame/CarGame.java</file>
+            <file>file:/C:/Users/Dylan/Desktop/Car-Game/src/cargame/Spawner.java</file>
         </group>
     </open-files>
 </project-private>

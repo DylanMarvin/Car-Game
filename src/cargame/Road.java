@@ -72,7 +72,7 @@ public class Road {
     }
     
     public static void Reset(){
-        roads.removeAll(roads);
+        roads.clear();
         Road.Create();
     }
     
